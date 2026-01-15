@@ -2,6 +2,11 @@
 # Development Targets
 #==============================================================================
 
+# Check which tools are available
+FLUTTER_EXISTS := $(shell command -v $(FLUTTER) 2>/dev/null)
+
+# Define Flutter-based targets only if Flutter exists
+ifdef FLUTTER_EXISTS
 .PHONY: install clean run dev outdated upgrade upgrade-major run-device
 
 install: ## Install dependencies
@@ -37,3 +42,4 @@ run-device: ## Run on specific device
 	@$(FLUTTER) devices
 	@read -p "Enter device ID: " device_id; \
 	$(FLUTTER) run -d $$device_id
+endif
