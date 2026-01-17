@@ -50,9 +50,14 @@ update-makefiles: ## Force update all shared makefiles and scripts
 # 1. Trigger the download if .make-init doesn't exist
 -include .make-init
 
+# Always include config first (if it exists)
+-include $(MAKEFILES_DIR)/config.mk
+
 # 2. Include all downloaded .mk files recursively
 # This avoids having to manually list every file twice
-SHARED_MK_FILES := $(shell find $(MAKEFILES_DIR) -name "*.mk" 2>/dev/null)
+SHARED_MK_FILES := $(shell \
+	find $(MAKEFILES_DIR) -name "*.mk" ! -name "config.mk" 2>/dev/null \
+)
 include $(SHARED_MK_FILES)
 
 #==============================================================================
