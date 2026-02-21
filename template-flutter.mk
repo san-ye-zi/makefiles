@@ -20,7 +20,7 @@ endif
 # Configuration
 #==============================================================================
 
-MAKEFILES_REPO    := https://raw.githubusercontent.com/san-ye-zi/makefiles/main
+MAKEFILES_REPO    := https://raw.githubusercontent.com/san-ye-zi/makefiles/v1.0.0
 MAKEFILES_DIR     := .make
 
 # Use relative paths from the repo root
