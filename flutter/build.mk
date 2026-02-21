@@ -38,3 +38,4 @@ build-ios-staging-secrets: ## Build iOS staging with secrets
 build-ios-prod-secrets: ## Build iOS production with secrets
 	@echo "🔨 Building PRODUCTION iOS with secrets..."
 	@$(FLUTTER) build ios $(PROD_DEFINES) $(SECRETS_DEFINES) --release --no-codesign
+endif
