@@ -34,6 +34,7 @@ REMOTE_RESOURCES  := \
   flutter/quality.mk \
   flutter/l10n.mk \
 	flutter/launcher_icons.mk \
+	flutter/fastlane.mk \
   flutter/scripts/sort_arb.py
 
 #==============================================================================

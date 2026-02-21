@@ -1,6 +1,8 @@
 #==============================================================================
-# Fastlane Commands
+# Fastlane Makefile for iOS and Android deployment
 #==============================================================================
+
+.PHONY: fastlane-install ios-beta ios-release ios-bump-build ios-bump-version ios-promote ios-metadata ios-screenshots ios-sync-certs android-beta android-release android-promote
 
 fastlane-install: ## Install fastlane dependencies for iOS and Android
 	@echo "📦 Installing Fastlane dependencies..."
@@ -8,8 +10,8 @@ fastlane-install: ## Install fastlane dependencies for iOS and Android
 	@cd android && bundle install
 	@echo "✅ Fastlane dependencies installed!"
 
-# iOS Fastlane Commands
-ios-beta: ## Deploy iOS to TestFlight
+# IOS Fastlane Commands
+ios-beta: ## Deploy iOS to TestFlight (test device IDs receive test ads)
 	@echo "🚀 Deploying iOS to TestFlight..."
 	@cd ios && bundle exec fastlane beta dart_defines:"$(PROD_DEFINES) $(SECRETS_DEFINES)"
 
@@ -22,6 +24,17 @@ ios-bump-build: ## Increment iOS build number
 
 ios-bump-version: ## Increment iOS version (use TYPE=patch|minor|major)
 	@cd ios && bundle exec fastlane bump_version type:$(or $(TYPE),patch)
+
+ios-promote: ## Promote tested TestFlight build to App Store without rebuilding (use BUILD=<number> to specify, omit for latest)
+	@cd ios && bundle exec fastlane promote $(if $(BUILD),build_number:$(BUILD),)
+
+ios-metadata: ## Upload App Store metadata (descriptions, keywords, release notes) for all languages
+	@echo "📝 Uploading metadata..."
+	@cd ios && bundle exec fastlane upload_metadata
+
+ios-screenshots: ## Upload App Store screenshots for all languages
+	@echo "📸 Uploading screenshots..."
+	@cd ios && bundle exec fastlane upload_screenshots
 
 ios-sync-certs: ## Sync iOS certificates using match
 	@cd ios && bundle exec fastlane sync_certs
