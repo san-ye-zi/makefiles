@@ -7,7 +7,7 @@ FLUTTER_EXISTS := $(shell command -v $(FLUTTER) 2>/dev/null)
 
 # Define Flutter-based targets only if Flutter exists
 ifdef FLUTTER_EXISTS
-.PHONY: install clean run dev outdated upgrade upgrade-major run-device
+.PHONY: install clean run dev dev-secrets dev-secrets-verbose echo-dev-secrets staging staging-secrets echo-staging-secrets prod prod-secrets echo-prod-secrets outdated upgrade upgrade-major run-device
 
 install: ## Install dependencies
 	@echo "📦 Installing dependencies..."
@@ -20,12 +20,50 @@ clean: ## Clean build artifacts
 	@$(FLUTTER) pub get
 	@echo "✅ Clean complete"
 
-run: ## Run the app
-	@$(FLUTTER) run
+# Development
+dev: ## Run the app
+	@echo "🚀 Running in DEVELOPMENT mode..."
+	@$(FLUTTER) run $(DEV_DEFINES)
 
-dev: ## Run in debug mode with hot reload
-	@$(FLUTTER) run --debug
+dev-secrets:
+	@echo "🚀 Running in DEVELOPMENT mode with secrets..."
+	@$(FLUTTER) run $(DEV_DEFINES) $(SECRETS_DEFINES)
 
+dev-secrets-verbose:
+	@echo "🚀 Running in DEVELOPMENT mode with secrets..."
+	@$(FLUTTER) run $(DEV_DEFINES) $(SECRETS_DEFINES) -v
+
+echo-dev-secrets:
+	@echo "Echo DEVELOPMENT dart-defines with secrets:"
+	@echo $(DEV_DEFINES) $(SECRETS_DEFINES)
+
+# Staging
+staging: ## Run the app in staging mode
+	@echo "🚀 Running in STAGING mode..."
+	@$(FLUTTER) run $(STAGING_DEFINES) --profile
+
+staging-secrets:
+	@echo "🚀 Running in STAGING mode with secrets..."
+	@$(FLUTTER) run $(STAGING_DEFINES) $(SECRETS_DEFINES) --profile
+
+echo-staging-secrets:
+	@echo "Echo STAGING dart-defines with secrets:"
+	@echo $(STAGING_DEFINES) $(SECRETS_DEFINES)
+
+# Production
+prod:
+	@echo "🚀 Running in PRODUCTION mode..."
+	@$(FLUTTER) run $(PROD_DEFINES) --release
+
+prod-secrets:
+	@echo "🚀 Running in PRODUCTION mode with secrets..."
+	@$(FLUTTER) run $(PROD_DEFINES) $(SECRETS_DEFINES) --release
+
+echo-prod-secrets:
+	@echo "Echo PRODUCTION dart-defines with secrets:"
+	@echo $(PROD_DEFINES) $(SECRETS_DEFINES)	
+
+# Check for outdated dependencies
 outdated: ## Check for outdated dependencies
 	@$(FLUTTER) pub outdated
 
