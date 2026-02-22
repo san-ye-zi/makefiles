@@ -2,7 +2,7 @@
 # Fastlane Makefile for iOS and Android deployment
 #==============================================================================
 
-.PHONY: fastlane-install ios-beta ios-release ios-bump-build ios-bump-version ios-promote ios-metadata ios-screenshots ios-sync-certs android-beta android-release android-promote
+.PHONY: fastlane-install ios-beta ios-release ios-bump-build ios-bump-version ios-promote ios-metadata ios-screenshots ios-sync-certs ios-generate-certs android-beta android-release android-promote
 
 fastlane-install: ## Install fastlane dependencies for iOS and Android
 	@echo "📦 Installing Fastlane dependencies..."
@@ -38,6 +38,9 @@ ios-screenshots: ## Upload App Store screenshots for all languages
 
 ios-sync-certs: ## Sync iOS certificates using match
 	@cd ios && bundle exec fastlane sync_certs
+
+ios-generate-certs: ## Generate new iOS certificates and provisioning profiles using match (first-time setup)
+	@cd ios && bundle exec fastlane generate_certs
 
 # Android Fastlane Commands
 android-beta: ## Deploy Android to Play Store internal track
