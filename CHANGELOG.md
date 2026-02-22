@@ -7,5 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- flutter/native_splash
+
 ## [1.0.0] - 2026-02-21
 - Initial Makefiles project with flutter
