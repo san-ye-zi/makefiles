@@ -10,7 +10,7 @@ ifdef DART_EXISTS
 #==============================================================================
 
 codegen: ## Run Drift code generation (after changing table definitions)
-	dart run build_runner build --delete-conflicting-outputs
+	@$(DART) run build_runner build --delete-conflicting-outputs
 
 codegen-watch: ## Watch for changes and regenerate Drift code
-	dart run build_runner watch --delete-conflicting-outputs
+	@$(DART) run build_runner watch --delete-conflicting-outputs

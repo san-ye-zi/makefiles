@@ -35,6 +35,7 @@ REMOTE_RESOURCES  := \
   flutter/l10n.mk \
 	flutter/launcher_icons.mk \
 	flutter/native_splash.mk \
+	flutter/codegen.mk \
 	flutter/fastlane.mk \
   flutter/scripts/sort_arb.py
 
