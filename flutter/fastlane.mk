@@ -2,7 +2,7 @@
 # Fastlane Makefile for iOS and Android deployment
 #==============================================================================
 
-.PHONY: fastlane-install ios-beta ios-release ios-bump-build ios-bump-version ios-promote ios-metadata ios-screenshots ios-sync-certs ios-generate-certs android-beta android-release android-promote
+.PHONY: fastlane-install ios-beta ios-release ios-bump-build ios-bump-version ios-promote ios-metadata ios-screenshots ios-screenshots-iphone ios-screenshots-ipad ios-sync-certs ios-generate-certs android-beta android-release android-promote
 
 # Login-shell wrapper. `make` recipes run in a bare, non-interactive /bin/sh
 # that does NOT load the Ruby version manager (rvm/rbenv/asdf), so they inherit
@@ -43,9 +43,17 @@ ios-metadata: ## Upload App Store metadata (descriptions, keywords, release note
 	@echo "📝 Uploading metadata..."
 	@$(RUN) 'cd ios && bundle exec fastlane upload_metadata'
 
-ios-screenshots: ## Upload App Store screenshots for all languages
+ios-screenshots: ## Upload App Store screenshots for all languages (iPhone then iPad, one device family at a time)
 	@echo "📸 Uploading screenshots..."
 	@$(RUN) 'cd ios && bundle exec fastlane upload_screenshots'
+
+ios-screenshots-iphone: ## Upload App Store iPhone screenshots for all languages
+	@echo "📸 Uploading iPhone screenshots..."
+	@$(RUN) 'cd ios && bundle exec fastlane upload_screenshots_iphone'
+
+ios-screenshots-ipad: ## Upload App Store iPad screenshots for all languages
+	@echo "📸 Uploading iPad screenshots..."
+	@$(RUN) 'cd ios && bundle exec fastlane upload_screenshots_ipad'
 
 ios-sync-certs: ## Sync iOS certificates using match
 	@$(RUN) 'cd ios && bundle exec fastlane sync_certs'
